@@ -5,6 +5,8 @@ authors = ["Tyler Southwick <tyler@northfuse.io>"]
 edition = "2018"
 repository = "https://github.com/northfuse/ifit-rs"
 exclude = [ "test/*" ]
+description = "client to interact with iFit"
+license-file = "LICENSE"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
