@@ -1,6 +1,7 @@
 use scraper::{Html, Selector, ElementRef};
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Deserialize, Serialize)]
 pub struct WorkoutSummary {
     pub id: String,
     pub title : String,
