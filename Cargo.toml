@@ -1,6 +1,6 @@
 [package]
 name = "ifit"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Tyler Southwick <tyler@northfuse.io>"]
 edition = "2018"
 repository = "https://github.com/northfuse/ifit-rs"
