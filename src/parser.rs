@@ -57,7 +57,7 @@ fn parse_workout_summary_row(row : ElementRef) -> Result<WorkoutSummary, Box<dyn
     })
 }
 
-#[cfg(TEST)]
+#[cfg(test)]
 mod test {
     use std::fs;
     use super::*;
