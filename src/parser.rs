@@ -1,5 +1,6 @@
 use scraper::{Html, Selector, ElementRef};
 use serde::{Deserialize, Serialize};
+use anyhow::{Result, anyhow};
 
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 pub struct WorkoutSummary {
@@ -9,7 +10,7 @@ pub struct WorkoutSummary {
     pub distance : String,
 }
 
-pub fn parse_workout_summaries(raw_html : String) -> Result<Vec<WorkoutSummary>, Box<dyn std::error::Error>> {
+pub fn parse_workout_summaries(raw_html : String) -> Result<Vec<WorkoutSummary>> {
     let workout_html = Html::parse_document(raw_html.as_str());
     let table_selector = Selector::parse(".workout-table").unwrap();
     let row_selector = Selector::parse(".workoutRows").unwrap();
@@ -25,7 +26,7 @@ pub fn parse_workout_summaries(raw_html : String) -> Result<Vec<WorkoutSummary>,
     Ok(workouts)
 }
 
-fn parse_workout_summary_row(row : ElementRef) -> Result<WorkoutSummary, Box<dyn std::error::Error>> {
+fn parse_workout_summary_row(row : ElementRef) -> Result<WorkoutSummary> {
     let title_selector = Selector::parse(".title a").unwrap();
 
     let mut title : Option<String> = None;
@@ -50,10 +51,10 @@ fn parse_workout_summary_row(row : ElementRef) -> Result<WorkoutSummary, Box<dyn
     }
 
     Ok(WorkoutSummary {
-        title: title.unwrap(),
-        id: id.unwrap(),
-        date: date.unwrap(),
-        distance: distance.unwrap(),
+        title: title.ok_or_else(|| anyhow!("title"))?,
+        id: id.ok_or_else(|| anyhow!("id"))?,
+        date: date.ok_or_else(|| anyhow!("date"))?,
+        distance: distance.ok_or_else(|| anyhow!("unable to parse workout distance"))?,
     })
 }
 
@@ -63,7 +64,7 @@ mod test {
     use super::*;
 
     #[test]
-    fn parses_workout_summaries() -> Result<(), Box<dyn std::error::Error>> {
+    fn parses_workout_summaries() -> Result<()> {
         let raw_workout = fs::read_to_string("test/workouts.html")?;
         let workouts = parse_workout_summaries(raw_workout)?;
         assert_eq!(workouts, vec![
