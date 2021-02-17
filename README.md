@@ -1,3 +1,3 @@
-![Build](https://github.com/northfuse/ifit-rs/workflows/Rust/badge.svg)
+![Build](https://github.com/northfuse/ifit-rs/workflows/CodeQuality/badge.svg)
 
 # ifit-rs
