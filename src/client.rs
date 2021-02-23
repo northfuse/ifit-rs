@@ -4,6 +4,7 @@ use crate::parser::{WorkoutSummary, parse_workout_summaries};
 use thiserror::Error;
 use anyhow::{Context, Result};
 
+#[derive(Clone)]
 pub struct IfitClient {
     client: Client
 }
